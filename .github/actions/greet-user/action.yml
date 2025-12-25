@@ -1,0 +1,38 @@
+name: "Greet User & Run Checks"
+description: "Prints a greeting and runs a basic validation script"
+
+inputs:
+  name:
+    description: "Name of the user"
+    required: true
+  run-check:
+    description: "Whether to run validation"
+    required: false
+    default: "true"
+
+outputs:
+  message:
+    description: "Final greeting message"
+    value: ${{ steps.build-msg.outputs.msg }}
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Say hello
+      run: echo "Hello, ${{ inputs.name }}!"
+      shell: bash
+
+    - name: Optionally run validation
+      if: ${{ inputs.run-check == 'true' }}
+      run: |
+        echo "Running validation..."
+        echo "Everything looks good!"
+      shell: bash
+
+    - name: Build output message
+      id: build-msg
+      run: |
+        msg="Welcome, ${{ inputs.name }} — pipeline started!"
+        echo "msg=$msg" >> "$GITHUB_OUTPUT"
+      shell: bash
