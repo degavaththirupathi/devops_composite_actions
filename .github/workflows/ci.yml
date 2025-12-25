@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
 
-jobs: 
+jobs:
   demo:
     runs-on: ubuntu-latest
 
@@ -17,4 +17,6 @@ jobs:
           run-check: "true"
 
       - name: Show returned message
-        run: echo "Composite action said: ${{ steps.greet.outputs.message }}"
+        run: |
+          echo "Composite action said: ${{ steps.greet.outputs.message }}"
+
