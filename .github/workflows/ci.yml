@@ -1,0 +1,20 @@
+name: CI with Composite Action
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Use composite action
+        id: greet
+        uses: ./.github/actions/greet-user
+        with:
+          name: "Developer"
+          run-check: "true"
+
+      - name: Show returned message
+        run: echo "Composite action said: ${{ steps.greet.outputs.message }}"
